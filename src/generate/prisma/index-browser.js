@@ -169,7 +169,7 @@ exports.memberRole = exports.$Enums.memberRole = {
 
 exports.taskStatus = exports.$Enums.taskStatus = {
   Todo: 'Todo',
-  OnProgres: 'OnProgres',
+  OnProgress: 'OnProgress',
   Done: 'Done'
 };
 

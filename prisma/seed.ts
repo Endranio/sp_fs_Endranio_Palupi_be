@@ -74,7 +74,7 @@ async function main() {
       {
         title: 'Tulis ERD',
         description: 'Beri review di Notion',
-        status: taskStatus.OnProgres,
+        status: taskStatus.OnProgress,
         projectId: projectAlpha.id,
         assignedId: bob.id,            
       },
@@ -97,7 +97,7 @@ async function main() {
       {
         title: 'Integrasi auth',
         description: 'JWT & middleware',
-        status: taskStatus.OnProgres,
+        status: taskStatus.OnProgress,
         projectId: projectBeta.id,
         assignedId: alice.id,        
       },

@@ -40,7 +40,7 @@ export type Task = $Result.DefaultSelection<Prisma.$TaskPayload>
 export namespace $Enums {
   export const taskStatus: {
   Todo: 'Todo',
-  OnProgres: 'OnProgres',
+  OnProgress: 'OnProgress',
   Done: 'Done'
 };
 
@@ -6219,7 +6219,7 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
-    status: $Enums.taskStatus
+    status?: $Enums.taskStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     project: ProjectCreateNestedOneWithoutTaskInput
@@ -6230,7 +6230,7 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
-    status: $Enums.taskStatus
+    status?: $Enums.taskStatus
     projectId: string
     assignedId: string
     createdAt?: Date | string
@@ -6263,7 +6263,7 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
-    status: $Enums.taskStatus
+    status?: $Enums.taskStatus
     projectId: string
     assignedId: string
     createdAt?: Date | string
@@ -6979,7 +6979,7 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
-    status: $Enums.taskStatus
+    status?: $Enums.taskStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     project: ProjectCreateNestedOneWithoutTaskInput
@@ -6989,7 +6989,7 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
-    status: $Enums.taskStatus
+    status?: $Enums.taskStatus
     projectId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -7136,7 +7136,7 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
-    status: $Enums.taskStatus
+    status?: $Enums.taskStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     assignee: UserCreateNestedOneWithoutTasksInput
@@ -7146,7 +7146,7 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
-    status: $Enums.taskStatus
+    status?: $Enums.taskStatus
     assignedId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -7447,7 +7447,7 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
-    status: $Enums.taskStatus
+    status?: $Enums.taskStatus
     projectId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -7539,7 +7539,7 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
-    status: $Enums.taskStatus
+    status?: $Enums.taskStatus
     assignedId: string
     createdAt?: Date | string
     updatedAt?: Date | string
