@@ -16,7 +16,7 @@ datasource db {
 
 enum taskStatus {
   Todo
-  OnProgres
+  OnProgress
   Done
 }
 
@@ -31,7 +31,7 @@ model User {
   username  String   @unique
   projects  Project[]
   members   Membership[]
-  tasks      Task[]
+  tasks     Task[]
 
 }
 

@@ -46,12 +46,11 @@ class ProjectService {
 
     async deleteProject(id:string){
         return await prisma.project.delete({
-            where:{id}
+            where:{id},
         })
     }
 
-    async createMembers(){}
-
+    
 
 }
 
