@@ -4712,7 +4712,7 @@ export namespace Prisma {
     description: string
     status: $Enums.taskStatus
     projectId: string
-    assignedId: string
+    assignedId: string | null
     createdAt: Date
     updatedAt: Date
     _count: TaskCountAggregateOutputType | null
@@ -4744,7 +4744,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     project?: boolean | ProjectDefaultArgs<ExtArgs>
-    assignee?: boolean | UserDefaultArgs<ExtArgs>
+    assignee?: boolean | Task$assigneeArgs<ExtArgs>
   }, ExtArgs["result"]["task"]>
 
   export type TaskSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -4757,7 +4757,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     project?: boolean | ProjectDefaultArgs<ExtArgs>
-    assignee?: boolean | UserDefaultArgs<ExtArgs>
+    assignee?: boolean | Task$assigneeArgs<ExtArgs>
   }, ExtArgs["result"]["task"]>
 
   export type TaskSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -4770,7 +4770,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     project?: boolean | ProjectDefaultArgs<ExtArgs>
-    assignee?: boolean | UserDefaultArgs<ExtArgs>
+    assignee?: boolean | Task$assigneeArgs<ExtArgs>
   }, ExtArgs["result"]["task"]>
 
   export type TaskSelectScalar = {
@@ -4787,22 +4787,22 @@ export namespace Prisma {
   export type TaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "status" | "projectId" | "assignedId" | "createdAt" | "updatedAt", ExtArgs["result"]["task"]>
   export type TaskInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     project?: boolean | ProjectDefaultArgs<ExtArgs>
-    assignee?: boolean | UserDefaultArgs<ExtArgs>
+    assignee?: boolean | Task$assigneeArgs<ExtArgs>
   }
   export type TaskIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     project?: boolean | ProjectDefaultArgs<ExtArgs>
-    assignee?: boolean | UserDefaultArgs<ExtArgs>
+    assignee?: boolean | Task$assigneeArgs<ExtArgs>
   }
   export type TaskIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     project?: boolean | ProjectDefaultArgs<ExtArgs>
-    assignee?: boolean | UserDefaultArgs<ExtArgs>
+    assignee?: boolean | Task$assigneeArgs<ExtArgs>
   }
 
   export type $TaskPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Task"
     objects: {
       project: Prisma.$ProjectPayload<ExtArgs>
-      assignee: Prisma.$UserPayload<ExtArgs>
+      assignee: Prisma.$UserPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4810,7 +4810,7 @@ export namespace Prisma {
       description: string
       status: $Enums.taskStatus
       projectId: string
-      assignedId: string
+      assignedId: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["task"]>
@@ -5208,7 +5208,7 @@ export namespace Prisma {
   export interface Prisma__TaskClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     project<T extends ProjectDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProjectDefaultArgs<ExtArgs>>): Prisma__ProjectClient<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    assignee<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    assignee<T extends Task$assigneeArgs<ExtArgs> = {}>(args?: Subset<T, Task$assigneeArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5642,6 +5642,25 @@ export namespace Prisma {
   }
 
   /**
+   * Task.assignee
+   */
+  export type Task$assigneeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
    * Task without action
    */
   export type TaskDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5734,6 +5753,14 @@ export namespace Prisma {
   };
 
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
   /**
@@ -5999,11 +6026,11 @@ export namespace Prisma {
     description?: StringFilter<"Task"> | string
     status?: EnumtaskStatusFilter<"Task"> | $Enums.taskStatus
     projectId?: StringFilter<"Task"> | string
-    assignedId?: StringFilter<"Task"> | string
+    assignedId?: StringNullableFilter<"Task"> | string | null
     createdAt?: DateTimeFilter<"Task"> | Date | string
     updatedAt?: DateTimeFilter<"Task"> | Date | string
     project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>
-    assignee?: XOR<UserScalarRelationFilter, UserWhereInput>
+    assignee?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }
 
   export type TaskOrderByWithRelationInput = {
@@ -6012,7 +6039,7 @@ export namespace Prisma {
     description?: SortOrder
     status?: SortOrder
     projectId?: SortOrder
-    assignedId?: SortOrder
+    assignedId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     project?: ProjectOrderByWithRelationInput
@@ -6028,11 +6055,11 @@ export namespace Prisma {
     description?: StringFilter<"Task"> | string
     status?: EnumtaskStatusFilter<"Task"> | $Enums.taskStatus
     projectId?: StringFilter<"Task"> | string
-    assignedId?: StringFilter<"Task"> | string
+    assignedId?: StringNullableFilter<"Task"> | string | null
     createdAt?: DateTimeFilter<"Task"> | Date | string
     updatedAt?: DateTimeFilter<"Task"> | Date | string
     project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>
-    assignee?: XOR<UserScalarRelationFilter, UserWhereInput>
+    assignee?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }, "id">
 
   export type TaskOrderByWithAggregationInput = {
@@ -6041,7 +6068,7 @@ export namespace Prisma {
     description?: SortOrder
     status?: SortOrder
     projectId?: SortOrder
-    assignedId?: SortOrder
+    assignedId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: TaskCountOrderByAggregateInput
@@ -6058,7 +6085,7 @@ export namespace Prisma {
     description?: StringWithAggregatesFilter<"Task"> | string
     status?: EnumtaskStatusWithAggregatesFilter<"Task"> | $Enums.taskStatus
     projectId?: StringWithAggregatesFilter<"Task"> | string
-    assignedId?: StringWithAggregatesFilter<"Task"> | string
+    assignedId?: StringNullableWithAggregatesFilter<"Task"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Task"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Task"> | Date | string
   }
@@ -6067,7 +6094,7 @@ export namespace Prisma {
     id?: string
     email: string
     username: string
-    password?: string
+    password: string
     projects?: ProjectCreateNestedManyWithoutOwnerInput
     members?: MembershipCreateNestedManyWithoutUserInput
     tasks?: TaskCreateNestedManyWithoutAssigneeInput
@@ -6077,7 +6104,7 @@ export namespace Prisma {
     id?: string
     email: string
     username: string
-    password?: string
+    password: string
     projects?: ProjectUncheckedCreateNestedManyWithoutOwnerInput
     members?: MembershipUncheckedCreateNestedManyWithoutUserInput
     tasks?: TaskUncheckedCreateNestedManyWithoutAssigneeInput
@@ -6107,7 +6134,7 @@ export namespace Prisma {
     id?: string
     email: string
     username: string
-    password?: string
+    password: string
   }
 
   export type UserUpdateManyMutationInput = {
@@ -6249,7 +6276,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     project: ProjectCreateNestedOneWithoutTaskInput
-    assignee: UserCreateNestedOneWithoutTasksInput
+    assignee?: UserCreateNestedOneWithoutTasksInput
   }
 
   export type TaskUncheckedCreateInput = {
@@ -6258,7 +6285,7 @@ export namespace Prisma {
     description: string
     status?: $Enums.taskStatus
     projectId: string
-    assignedId: string
+    assignedId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -6271,7 +6298,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     project?: ProjectUpdateOneRequiredWithoutTaskNestedInput
-    assignee?: UserUpdateOneRequiredWithoutTasksNestedInput
+    assignee?: UserUpdateOneWithoutTasksNestedInput
   }
 
   export type TaskUncheckedUpdateInput = {
@@ -6280,7 +6307,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumtaskStatusFieldUpdateOperationsInput | $Enums.taskStatus
     projectId?: StringFieldUpdateOperationsInput | string
-    assignedId?: StringFieldUpdateOperationsInput | string
+    assignedId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6291,7 +6318,7 @@ export namespace Prisma {
     description: string
     status?: $Enums.taskStatus
     projectId: string
-    assignedId: string
+    assignedId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -6311,7 +6338,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumtaskStatusFieldUpdateOperationsInput | $Enums.taskStatus
     projectId?: StringFieldUpdateOperationsInput | string
-    assignedId?: StringFieldUpdateOperationsInput | string
+    assignedId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6512,6 +6539,31 @@ export namespace Prisma {
     not?: NestedEnumtaskStatusFilter<$PrismaModel> | $Enums.taskStatus
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type UserNullableScalarRelationFilter = {
+    is?: UserWhereInput | null
+    isNot?: UserWhereInput | null
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
   export type TaskCountOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
@@ -6553,6 +6605,24 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumtaskStatusFilter<$PrismaModel>
     _max?: NestedEnumtaskStatusFilter<$PrismaModel>
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type ProjectCreateNestedManyWithoutOwnerInput = {
@@ -6843,12 +6913,18 @@ export namespace Prisma {
     update?: XOR<XOR<ProjectUpdateToOneWithWhereWithoutTaskInput, ProjectUpdateWithoutTaskInput>, ProjectUncheckedUpdateWithoutTaskInput>
   }
 
-  export type UserUpdateOneRequiredWithoutTasksNestedInput = {
+  export type UserUpdateOneWithoutTasksNestedInput = {
     create?: XOR<UserCreateWithoutTasksInput, UserUncheckedCreateWithoutTasksInput>
     connectOrCreate?: UserCreateOrConnectWithoutTasksInput
     upsert?: UserUpsertWithoutTasksInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTasksInput, UserUpdateWithoutTasksInput>, UserUncheckedUpdateWithoutTasksInput>
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -6942,6 +7018,20 @@ export namespace Prisma {
     not?: NestedEnumtaskStatusFilter<$PrismaModel> | $Enums.taskStatus
   }
 
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type NestedEnumtaskStatusWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.taskStatus | EnumtaskStatusFieldRefInput<$PrismaModel>
     in?: $Enums.taskStatus[] | ListEnumtaskStatusFieldRefInput<$PrismaModel>
@@ -6950,6 +7040,34 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumtaskStatusFilter<$PrismaModel>
     _max?: NestedEnumtaskStatusFilter<$PrismaModel>
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type ProjectCreateWithoutOwnerInput = {
@@ -7113,7 +7231,7 @@ export namespace Prisma {
     description?: StringFilter<"Task"> | string
     status?: EnumtaskStatusFilter<"Task"> | $Enums.taskStatus
     projectId?: StringFilter<"Task"> | string
-    assignedId?: StringFilter<"Task"> | string
+    assignedId?: StringNullableFilter<"Task"> | string | null
     createdAt?: DateTimeFilter<"Task"> | Date | string
     updatedAt?: DateTimeFilter<"Task"> | Date | string
   }
@@ -7122,7 +7240,7 @@ export namespace Prisma {
     id?: string
     email: string
     username: string
-    password?: string
+    password: string
     members?: MembershipCreateNestedManyWithoutUserInput
     tasks?: TaskCreateNestedManyWithoutAssigneeInput
   }
@@ -7131,7 +7249,7 @@ export namespace Prisma {
     id?: string
     email: string
     username: string
-    password?: string
+    password: string
     members?: MembershipUncheckedCreateNestedManyWithoutUserInput
     tasks?: TaskUncheckedCreateNestedManyWithoutAssigneeInput
   }
@@ -7170,7 +7288,7 @@ export namespace Prisma {
     status?: $Enums.taskStatus
     createdAt?: Date | string
     updatedAt?: Date | string
-    assignee: UserCreateNestedOneWithoutTasksInput
+    assignee?: UserCreateNestedOneWithoutTasksInput
   }
 
   export type TaskUncheckedCreateWithoutProjectInput = {
@@ -7178,7 +7296,7 @@ export namespace Prisma {
     title: string
     description: string
     status?: $Enums.taskStatus
-    assignedId: string
+    assignedId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -7258,7 +7376,7 @@ export namespace Prisma {
     id?: string
     email: string
     username: string
-    password?: string
+    password: string
     projects?: ProjectCreateNestedManyWithoutOwnerInput
     tasks?: TaskCreateNestedManyWithoutAssigneeInput
   }
@@ -7267,7 +7385,7 @@ export namespace Prisma {
     id?: string
     email: string
     username: string
-    password?: string
+    password: string
     projects?: ProjectUncheckedCreateNestedManyWithoutOwnerInput
     tasks?: TaskUncheckedCreateNestedManyWithoutAssigneeInput
   }
@@ -7391,7 +7509,7 @@ export namespace Prisma {
     id?: string
     email: string
     username: string
-    password?: string
+    password: string
     projects?: ProjectCreateNestedManyWithoutOwnerInput
     members?: MembershipCreateNestedManyWithoutUserInput
   }
@@ -7400,7 +7518,7 @@ export namespace Prisma {
     id?: string
     email: string
     username: string
-    password?: string
+    password: string
     projects?: ProjectUncheckedCreateNestedManyWithoutOwnerInput
     members?: MembershipUncheckedCreateNestedManyWithoutUserInput
   }
@@ -7581,7 +7699,7 @@ export namespace Prisma {
     title: string
     description: string
     status?: $Enums.taskStatus
-    assignedId: string
+    assignedId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -7611,7 +7729,7 @@ export namespace Prisma {
     status?: EnumtaskStatusFieldUpdateOperationsInput | $Enums.taskStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    assignee?: UserUpdateOneRequiredWithoutTasksNestedInput
+    assignee?: UserUpdateOneWithoutTasksNestedInput
   }
 
   export type TaskUncheckedUpdateWithoutProjectInput = {
@@ -7619,7 +7737,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumtaskStatusFieldUpdateOperationsInput | $Enums.taskStatus
-    assignedId?: StringFieldUpdateOperationsInput | string
+    assignedId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -7629,7 +7747,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumtaskStatusFieldUpdateOperationsInput | $Enums.taskStatus
-    assignedId?: StringFieldUpdateOperationsInput | string
+    assignedId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

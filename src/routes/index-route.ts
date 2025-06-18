@@ -6,7 +6,7 @@ import authRouter from "./auth-route"
 
 const router = express.Router();
 
-router.use("/project", projectRouter);
+router.use("/project",projectRouter);
 router.use("/member",memberRouter)
 router.use("/task",taskRouter)
 router.use("/auth",authRouter)

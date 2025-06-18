@@ -64,7 +64,10 @@ async login(req: Request, res: Response, next: NextFunction) {
       );
       console.log(token)
       const { password: unusedpassword, ...userResponse } = user;
-      res.json({message:"Login success", token})
+       res.status(200).send({
+        message: 'Login success',
+        data: { token, user: userResponse },
+      });
     } catch (error) {
       next(error);
     }

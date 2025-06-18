@@ -14,6 +14,17 @@ class projectController {
         }
     }
 
+    async getProjectById(req:Request, res:Response, next:NextFunction){
+        try {
+         const {id} = req.params
+            const project = await projectService.getProjectById(id)
+            res.json(project)
+     
+        } catch (error) {
+            next(error)
+        }
+    }
+
      async createProject(req:Request, res:Response, next:NextFunction){
         try {
          const {userId} = req.params
@@ -45,7 +56,7 @@ class projectController {
         try {
             const {id} =req.params
             await projectService.deleteProject(id)
-            res.json("Deleted")
+            res.json({message:"Deleted"})
         } catch (error) {
             next(error)
         }

@@ -18,20 +18,32 @@ class MemberService {
     ...project.members.map((m) => m.userId),
   ];
 
-  // 2. kembalikan user yang *tidak* ada di excludedIds
   return prisma.user.findMany({
     where: { id: { notIn: excludedIds } },
     select: { id: true, username: true, email: true },
   });
 }
 
-async getMember(id:string){
-    return prisma.project.findUnique({
-        where:{id},
+async getMember(projectId:string){
+    return prisma.membership.findMany({
+        where:{projectId},
         include:{
-                members:true
+          user:{
+            select:{
+              email:true,
+              username:true
             }
+          }
+        }
     })
+}
+
+async addMember(userId:string,projectId:string){
+  return await prisma.membership.create({
+    data:{
+      userId,projectId
+    }
+  })
 }
 
 async deleteMember(userId:string,projectId:string){

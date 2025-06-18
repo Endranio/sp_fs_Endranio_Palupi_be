@@ -163,6 +163,11 @@ exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
 exports.memberRole = exports.$Enums.memberRole = {
   Member: 'Member',
   Owner: 'Owner'

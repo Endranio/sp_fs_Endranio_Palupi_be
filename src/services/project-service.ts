@@ -20,6 +20,12 @@ class ProjectService {
         })
     }
 
+    async getProjectById(id:string){
+        return prisma.project.findUnique({
+            where:{id}
+        })
+    }
+
     async createProject(userId:string,data:CreateProjectDTO){
         return await prisma.project.create({
             data: {
