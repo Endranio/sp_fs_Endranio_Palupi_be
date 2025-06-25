@@ -33,8 +33,8 @@ async register(req:Request, res:Response, next:NextFunction){
 async login(req: Request, res: Response, next: NextFunction) {
     try {
       const body = req.body;
-      const { email, password } = await Login.validateAsync(body);
-      const user = await authService.login(email);
+      const { identity, password } = await Login.validateAsync(body);
+      const user = await authService.login(identity);
 
       if (!user) {
         res.status(404).json({
@@ -62,7 +62,9 @@ async login(req: Request, res: Response, next: NextFunction) {
           expiresIn: '24h',
         },
       );
-      console.log(token)
+      
+
+        
       const { password: unusedpassword, ...userResponse } = user;
        res.status(200).send({
         message: 'Login success',

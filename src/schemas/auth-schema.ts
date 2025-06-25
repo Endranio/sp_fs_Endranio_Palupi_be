@@ -10,9 +10,9 @@ const Register = joi.object<RegisterDTO>({
 
 })
 
-const Login = joi.object<LoginDTO>({
+const Login = joi.object({
     
-    email:joi.string().email().required(),
+    identity:joi.string().required(),
     password:joi.string().min(6).required()
 
 })

@@ -8,7 +8,7 @@ router.get("/:projectId",taskController.getTaskByProjectId)
 router.post("/:projectId",taskController.createTask)
 router.patch("/:id",taskController.updateTask)
 router.patch("/",taskController.updateStatus)
-router.delete("/:id",taskController.deleteProject)
+router.delete("/:id",taskController.deleteTask)
 
 
 

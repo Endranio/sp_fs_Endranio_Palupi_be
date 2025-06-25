@@ -7,7 +7,14 @@ class TaskService {
 
     async getTaskByProject(projectId:string){
         return await prisma.task.findMany({
-            where:{projectId}
+            where:{projectId},
+           include:{
+            assignee:{
+                select:{
+                    username:true
+                }
+            }
+           }
         })
     }
 
@@ -34,6 +41,7 @@ class TaskService {
             where:{id},
             data:{
                 status:newStatus
+                
             }
         })
     }

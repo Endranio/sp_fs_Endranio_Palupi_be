@@ -3,10 +3,10 @@ import prisma from "../libs/prisma";
 
 class MemberService {
 
-    // ganti path sesuai project
+   
 
   async listEligibleUsers(projectId: string) {
-  // 1. ambil semua userId yang sudah tergabung (owner + membership)
+  
   const project = await prisma.project.findUnique({
     where: { id: projectId },
     select: { ownerId: true, members: { select: { userId: true } } },

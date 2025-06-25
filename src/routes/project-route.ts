@@ -5,7 +5,7 @@ import projectController from '../controllers/project-controller'
 const router = express.Router()
 
 router.get("/:userId",projectController.getProject)
-router.get("/id/:id",projectController.getProjectById)
+router.get("/detail/:id",projectController.getProjectById)
 router.post("/:userId",projectController.createProject)
 router.patch("/:id",projectController.updateProject)
 router.delete("/:id",projectController.deleteProject)
