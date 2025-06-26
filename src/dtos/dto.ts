@@ -1,4 +1,4 @@
-import {Project,Task,User} from "../generate/prisma"
+import {Project,Task,User} from "@prisma/client"
 
 export type CreateProjectDTO = Pick<Project,"name"|"description">
 export type CreateTaskDTO = Pick<Task,"title"|"description"|"assignedId">

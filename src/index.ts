@@ -1,12 +1,14 @@
 import express from 'express'
-import { errorHandler } from './src/middlewares/error-middleware'
-import Router from "./src/routes/index-route"
+import { errorHandler } from './middlewares/error-middleware'
+import Router from "./routes/index-route"
 import dotenv from 'dotenv';
 import cors from 'cors';
 
 dotenv.config();
 
 const app = express()
+const PORT = 5000
+
 
 app.use(
   cors({
@@ -23,4 +25,5 @@ app.get('/', (req, res) => {
 app.use(Router)
 app.use(errorHandler)
 
-export default app;
+
+export default app
