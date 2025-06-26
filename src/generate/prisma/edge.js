@@ -179,6 +179,14 @@ const config = {
         "fromEnvVar": null,
         "value": "debian-openssl-3.0.x",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "debian-openssl-3.0.x"
+      },
+      {
+        "fromEnvVar": null,
+        "value": "rhel-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
@@ -196,6 +204,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -204,8 +213,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generate/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nenum taskStatus {\n  Todo\n  OnProgress\n  Done\n}\n\nenum memberRole {\n  Member\n  Owner\n}\n\nmodel User {\n  id       String       @id @default(uuid())\n  email    String       @unique\n  username String       @unique\n  password String\n  projects Project[]\n  members  Membership[]\n  tasks    Task[]\n}\n\nmodel Project {\n  id          String       @id @default(uuid())\n  name        String\n  description String\n  owner       User         @relation(fields: [ownerId], references: [id])\n  ownerId     String\n  members     Membership[]\n  task        Task[]\n  createdAt   DateTime     @default(now())\n  updatedAt   DateTime     @default(now())\n}\n\nmodel Membership {\n  id        String     @id @default(uuid())\n  user      User       @relation(fields: [userId], references: [id])\n  userId    String\n  project   Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)\n  projectId String\n  role      memberRole @default(Member)\n\n  @@unique([userId, projectId])\n}\n\nmodel Task {\n  id          String     @id @default(uuid())\n  title       String\n  description String\n  status      taskStatus @default(Todo)\n  project     Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)\n  projectId   String\n  assignee    User?      @relation(fields: [assignedId], references: [id])\n  assignedId  String?\n  createdAt   DateTime   @default(now())\n  updatedAt   DateTime   @default(now())\n}\n",
-  "inlineSchemaHash": "c1b8245e51c887c97c580666f4a1a38b910c15314aac5a7a003793dc98e4109d",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider      = \"prisma-client-js\"\n  output        = \"../src/generate/prisma\"\n  binaryTargets = [\"native\", \"debian-openssl-3.0.x\", \"rhel-openssl-3.0.x\"]\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nenum taskStatus {\n  Todo\n  OnProgress\n  Done\n}\n\nenum memberRole {\n  Member\n  Owner\n}\n\nmodel User {\n  id       String       @id @default(uuid())\n  email    String       @unique\n  username String       @unique\n  password String\n  projects Project[]\n  members  Membership[]\n  tasks    Task[]\n}\n\nmodel Project {\n  id          String       @id @default(uuid())\n  name        String\n  description String\n  owner       User         @relation(fields: [ownerId], references: [id])\n  ownerId     String\n  members     Membership[]\n  task        Task[]\n  createdAt   DateTime     @default(now())\n  updatedAt   DateTime     @default(now())\n}\n\nmodel Membership {\n  id        String     @id @default(uuid())\n  user      User       @relation(fields: [userId], references: [id])\n  userId    String\n  project   Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)\n  projectId String\n  role      memberRole @default(Member)\n\n  @@unique([userId, projectId])\n}\n\nmodel Task {\n  id          String     @id @default(uuid())\n  title       String\n  description String\n  status      taskStatus @default(Todo)\n  project     Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)\n  projectId   String\n  assignee    User?      @relation(fields: [assignedId], references: [id])\n  assignedId  String?\n  createdAt   DateTime   @default(now())\n  updatedAt   DateTime   @default(now())\n}\n",
+  "inlineSchemaHash": "8ff5bad093b1cb853258ca325747e584a94c78f7b03b1d4a8f7a672dd35ee649",
   "copyEngine": true
 }
 config.dirname = '/'
