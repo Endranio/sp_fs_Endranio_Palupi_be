@@ -8,13 +8,7 @@ import cors from 'cors';
 const app = express()
 const PORT = 5000
 
-app.use(
-  cors({
-    origin: [
-      'http://localhost:3000',
-    ],
-  }),
-);
+app.use(cors());
 
 app.use(express.json())
 dotenv.config();
