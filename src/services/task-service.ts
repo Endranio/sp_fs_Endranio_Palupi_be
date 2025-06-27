@@ -1,6 +1,6 @@
 
 import { CreateTaskDTO } from "../dtos/dto";
-import prisma from "../libs/prisma";
+import {prisma} from "../libs/prisma";
 import { taskStatus } from "@prisma/client";
 
 class TaskService {

@@ -1,6 +1,6 @@
 import { RegisterDTO } from "../dtos/dto";
 
-import prisma from "../libs/prisma";
+import {prisma} from "../libs/prisma";
 
 class AuthService {
   async register(data: RegisterDTO) {
