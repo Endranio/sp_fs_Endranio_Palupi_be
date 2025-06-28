@@ -8,8 +8,8 @@
     "dev": "nodemon src/index.ts",
     "start": "nodemon dist/index.js",
     "build":"tsc",
-    "vercel-build": "prisma generate",
-     "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "vercel-build": "prisma generate"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
