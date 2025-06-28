@@ -9,7 +9,7 @@
     "start": "nodemon dist/index.js",
     "build":"tsc",
     "postinstall": "prisma generate",
-    "vercel-build": "prisma generate"
+    "vercel-build": "tsc && prisma generate"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
