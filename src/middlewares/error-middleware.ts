@@ -23,6 +23,4 @@ export function errorHandler(error:Error,req: Request,
         res.status(500).json({
             message:"internal server error"
         })
-        console.log("errornya",error)
-
 }
