@@ -1,18 +1,20 @@
-import { Request,Response,NextFunction } from "express"
-import authService from "../services/auth-service"
+import { Request, Response, NextFunction } from "express";
+import authService from "../services/auth-service";
 import { RegisterDTO } from "../dtos/dto";
-import bcrypt from 'bcrypt';
-import { Login, Register } from "../schemas/auth-schema";
-import jwt from 'jsonwebtoken';
+import bcrypt from "bcrypt";
+import { Login, Register,Oauth } from "../schemas/auth-schema";
+import jwt from "jsonwebtoken";
 
 class AuthController {
-    
-async register(req:Request, res:Response, next:NextFunction){
- try {
+  async register(req: Request, res: Response, next: NextFunction) {
+    try {
       const body = req.body;
 
       const validated = await Register.validateAsync(body);
-      const hashedpassword = await bcrypt.hash(validated.password, 10);
+      const hashedpassword = await bcrypt.hash(
+        validated.password as string,
+        10
+      );
       const registerBody: RegisterDTO = {
         ...validated,
         password: hashedpassword,
@@ -20,17 +22,15 @@ async register(req:Request, res:Response, next:NextFunction){
 
       const user = await authService.register(registerBody);
       res.status(200).json({
-        message: 'Register success',
+        message: "Register success",
         data: { ...user },
       });
     } catch (error) {
       next(error);
     }
+  }
 
-    
-}
-
-async login(req: Request, res: Response, next: NextFunction) {
+  async login(req: Request, res: Response, next: NextFunction) {
     try {
       const body = req.body;
       const { identity, password } = await Login.validateAsync(body);
@@ -38,20 +38,23 @@ async login(req: Request, res: Response, next: NextFunction) {
 
       if (!user) {
         res.status(404).json({
-          message: 'email/password is wrong',
+          message: "email/password is wrong",
         });
         return;
       }
 
-      const passwordMatch = await bcrypt.compare(password, user.password);
+      const passwordMatch = await bcrypt.compare(
+        password,
+        user.password as string
+      );
       if (!passwordMatch) {
         res.status(404).json({
-          message: 'email/password is wrong',
+          message: "email/password is wrong",
         });
         return;
       }
 
-      const jwtSecret = process.env.JWT_SECRET || '';
+      const jwtSecret = process.env.JWT_SECRET || "";
 
       const token = jwt.sign(
         {
@@ -59,16 +62,41 @@ async login(req: Request, res: Response, next: NextFunction) {
         },
         jwtSecret,
         {
-          expiresIn: '24h',
-        },
+          expiresIn: "24h",
+        }
       );
-      
 
-        
       const { password: unusedpassword, ...userResponse } = user;
-       res.status(200).send({
-        message: 'Login success',
+      res.status(200).send({
+        message: "Login success",
         data: { token, user: userResponse },
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async Oauth(req: Request, res: Response, next: NextFunction) {
+    try {
+      const body = req.body;
+      const validated = await Oauth.validateAsync(body);
+      const user = await authService.Oauth(validated);
+
+      const jwtSecret = process.env.JWT_SECRET || "";
+
+      const token = jwt.sign(
+        {
+          id: user?.id,
+        },
+        jwtSecret,
+        {
+          expiresIn: "24h",
+        }
+      );
+
+      res.status(200).send({
+        message: "Login success",
+        data: { token, user },
       });
     } catch (error) {
       next(error);
@@ -79,25 +107,22 @@ async login(req: Request, res: Response, next: NextFunction) {
     try {
       const payload = (req as any).user;
       const user = await authService.getUserById(payload.id);
-  
+
       if (!user) {
         res.status(404).json({
-          message: 'User not found',
+          message: "User not found",
         });
         return;
       }
 
-      
       res.status(200).json({
-        message: 'User check success',
-        data: { user},
+        message: "User check success",
+        data: { user },
       });
     } catch (error) {
       next(error);
     }
   }
-
 }
 
-export default new AuthController()
-
+export default new AuthController();

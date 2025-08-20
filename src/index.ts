@@ -9,12 +9,12 @@ dotenv.config();
 const app = express()
 
 
-
 app.use(
   cors({
     origin: ['https://sp-fs-endranio-palupi.vercel.app','http://localhost:3000'],
   }),
 );
+
 app.use(express.json())
 
 app.get('/', (req, res) => {

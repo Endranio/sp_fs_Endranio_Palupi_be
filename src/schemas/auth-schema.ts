@@ -1,5 +1,5 @@
 import joi from 'joi'
-import { LoginDTO, RegisterDTO } from '../dtos/dto'
+import { LoginDTO, OauthDTO, RegisterDTO } from '../dtos/dto'
 
 
 const Register = joi.object<RegisterDTO>({
@@ -16,4 +16,12 @@ const Login = joi.object({
     password:joi.string().min(6).required()
 
 })
-export { Login,Register }
+
+const Oauth = joi.object<OauthDTO>({
+    
+    email:joi.string().email().required(),
+    username:joi.string().required(),
+    provider:joi.string().required()
+
+})
+export { Login, Register,Oauth}

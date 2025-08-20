@@ -1,6 +1,6 @@
-import { RegisterDTO } from "../dtos/dto";
+import { OauthDTO, RegisterDTO } from "../dtos/dto";
 
-import {prisma} from "../libs/prisma";
+import { prisma } from "../libs/prisma";
 
 class AuthService {
   async register(data: RegisterDTO) {
@@ -10,6 +10,7 @@ class AuthService {
       },
     });
   }
+
   async login(identity: string) {
     return await prisma.user.findFirst({
       where: {
@@ -30,5 +31,18 @@ class AuthService {
       where: { id },
     });
   }
+
+  async Oauth(data: OauthDTO) {
+    const user = await prisma.user.upsert({
+      where: { email: data.email },
+      update: {},
+      create: {
+        ...data,
+      },
+    });
+
+    return user;
+  }
 }
+
 export default new AuthService();
