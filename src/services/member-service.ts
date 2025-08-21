@@ -12,19 +12,20 @@ class MemberService {
       project.ownerId,
       ...project.members.map((m) => m.userId),
     ];
-
-    return prisma.user.findMany({
-      where: {
-        id: { notIn: excludedIds },
-        OR: query
-          ? [
-              { username: { startsWith: query } },
-              { email: { startsWith: query } },
-            ]
-          : undefined,
-      },
-      select: { id: true, username: true, email: true },
-    });
+    if (query) {
+      return prisma.user.findMany({
+        where: {
+          id: { notIn: excludedIds },
+          OR: query
+            ? [
+                { username: { startsWith: query } },
+                { email: { startsWith: query } },
+              ]
+            : undefined,
+        },
+        select: { id: true, username: true, email: true },
+      });
+    }
   }
 
   async getMember(projectId: string) {
