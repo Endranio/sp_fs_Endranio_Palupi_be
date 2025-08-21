@@ -26,6 +26,7 @@ class MemberService {
         select: { id: true, username: true, email: true },
       });
     }
+    return [];
   }
 
   async getMember(projectId: string) {
