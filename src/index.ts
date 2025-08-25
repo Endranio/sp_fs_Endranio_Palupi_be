@@ -1,28 +1,44 @@
-import express from 'express'
-import { errorHandler } from './middlewares/error-middleware'
-import Router from "./routes/index-route"
-import dotenv from 'dotenv';
-import cors from 'cors';
+import express from "express";
+import { errorHandler } from "./middlewares/error-middleware";
+import Router from "./routes/index-route";
+import dotenv from "dotenv";
+import cors from "cors";
+import { Server } from "socket.io";
+import { createServer } from "http";
 
 dotenv.config();
 
-const app = express()
-
+const app = express();
 
 app.use(
   cors({
-    origin: ['https://sp-fs-endranio-palupi.vercel.app','http://localhost:3000'],
-  }),
+    origin: [
+      "https://sp-fs-endranio-palupi.vercel.app",
+      "http://localhost:3000",
+    ],
+  })
 );
 
-app.use(express.json())
+app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('Hello Express!')
-})
+app.get("/", (req, res) => {
+  res.send("Hello Express!");
+});
 
-app.use(Router)
-app.use(errorHandler)
+app.use(Router);
+app.use(errorHandler);
 
+const server = createServer(app);
 
-export default app
+export const io = new Server(server, {
+  cors: {
+    origin: [
+      "https://sp-fs-endranio-palupi.vercel.app",
+      "http://localhost:3000",
+    ],
+  },
+});
+
+server.listen(process.env.PORT, () => {
+  console.log(`Server is running on port ${process.env.PORT}`);
+});

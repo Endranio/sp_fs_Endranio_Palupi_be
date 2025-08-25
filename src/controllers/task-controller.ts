@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import taskService from "../services/task-service";
 import { createTask } from "../schemas/task-schema";
+import { io } from "../index";
 
 class TaskController {
   async getTaskByProjectId(req: Request, res: Response, next: NextFunction) {
@@ -21,7 +22,7 @@ class TaskController {
 
       const validate = await createTask.validateAsync(body);
       const task = await taskService.createTask(projectId, validate);
-
+      io.emit("message");
       res.json({ data: task, message: "Task created" });
     } catch (error) {
       next(error);
@@ -35,7 +36,7 @@ class TaskController {
 
       const validate = await createTask.validateAsync(body);
       const task = await taskService.updateTask(id, validate);
-
+      io.emit("message");
       res.json({ data: task, message: "Task edited" });
     } catch (error) {
       next(error);
@@ -46,6 +47,7 @@ class TaskController {
     try {
       const { id, newStatus } = req.body.data;
       const task = await taskService.updateStatus(id, newStatus);
+      io.emit("message");
       res.json(task);
     } catch (error) {
       next(error);
@@ -56,6 +58,7 @@ class TaskController {
     try {
       const { id } = req.params;
       await taskService.deleteTask(id);
+      io.emit("message");
       res.json({ message: "Deleted" });
     } catch (error) {
       next(error);
